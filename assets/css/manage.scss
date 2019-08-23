@@ -1,0 +1,31 @@
+/**
+ * manage
+ *
+ * This file is part of the Munchkin project.
+ *
+ * @author     Lauser, Nicolai <munchkin-counter@lauser.info>
+ * @copyright  2019 Lauser, Nicolai
+ * @version    $Id$
+ */
+@import "app";
+
+.players {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.players ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.character-img img {
+  max-height: 100% !important;
+  width: auto !important;
+}
+
+.modal-content {
+  background-color: #fad994;
+}

@@ -1,0 +1,143 @@
+{#
+ # manage
+ #
+ # This file is part of the Munchkin project.
+ #
+ # @author     Lauser, Nicolai <munchkin-counter@lauser.info>
+ # @copyright  2019 Lauser, Nicolai
+ # @version    $Id$
+ #}
+{% extends 'base/index.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="container-fluid">
+            <div class="players p-3">
+                <ul>
+                    <li>
+                        <button v-on:click="newGameHandler" type="button" class="btn btn-sm btn-danger">
+                            <i class="fas fa-bomb"></i>
+                        </button>
+                    </li>
+                    <li v-for="player in sortedPlayers">
+                        <strong>{{ vue('player.username') }}</strong>&nbsp;({{ vue('player.level') }})
+                        <i v-if="player.gender === 'male'" class="fas fa-mars"></i>
+                        <i v-if="player.gender === 'female'" class="fas fa-venus"></i>
+                        <i v-if="player.level === giftLevel" class="fas fa-hand-holding-heart text-danger"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="character-img text-right">
+                <img v-show="player.gender === 'male'" src="{{ asset('images/male.png') }}">
+                <img v-show="player.gender === 'female'" src="{{ asset('images/female.png') }}">
+            </div>
+            <div class="character-actions mt-3">
+                <div class="btn-group btn-group-lg btn-block" role="group" aria-label="Action Buttons">
+                    <button v-on:click="deadHandler" type="button" class="btn btn-primary">
+                        <i class="fas fa-skull"></i>
+                    </button>
+                    <button v-on:click="genderHandler" type="button" class="btn btn-primary">
+                        <i class="fas fa-venus-mars"></i>
+                    </button>
+                    <button v-show="players" v-on:click="getPlayers" type="button" class="btn btn-primary" data-toggle="modal" data-target="#fightModal">
+                        <i class="fas fa-user-friends"></i>
+                    </button>
+                    <button v-on:click="fightHandler" type="button" class="btn btn-primary">
+                        <i class="fas fa-dungeon"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="character-properties text-center pt-4 pb-4">
+                <div class="row character-property mb-3">
+                    <div class="col">
+                        <button v-show="player.level > 1" v-on:click="levelDownHandler" type="button" class="btn btn-lg btn-outline-primary">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    <div class="col lead">
+                        <i class="fas fa-user-alt"></i>&nbsp;{{ vue('player.level') }}
+                    </div>
+                    <div class="col">
+                        <button v-show="player.level < 10" v-on:click="levelUpHandler" type="button" class="btn btn-lg btn-outline-primary">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row character-property mb-3">
+                    <div class="col">
+                        <button v-on:click="equipmentDownHandler" type="button" class="btn btn-lg btn-outline-primary">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    <div class="col lead">
+                        <i class="fas fa-horse-head"></i>&nbsp;{{ vue('player.equipment') }}
+                    </div>
+                    <div class="col">
+                        <button v-on:click="equipmentUpHandler" type="button" class="btn btn-lg btn-outline-primary">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row character-property">
+                    <div class="col">
+                        <button v-on:click="bonusDownHandler" type="button" class="btn btn-lg btn-outline-primary">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    <div class="col lead">
+                        <i class="fas fa-medkit"></i>&nbsp;{{ vue('player.bonus') }}
+                    </div>
+                    <div class="col">
+                        <button v-on:click="bonusUpHandler" type="button" class="btn btn-lg btn-outline-primary">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <h1>{{ vue('strongness') }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="fightModal" tabindex="-1" role="dialog" aria-labelledby="fightModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <select v-model="fight.player" class="form-control">
+                                    <option v-for="player in otherPlayers" v-bind:value="player.username">{{ vue('player.username') }} {{ vue('player.level + player.equipment + player.bonus') }} ({{ vue('player.level') }})</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row character-property text-center pt-4 pb-4">
+                        <div class="col">
+                            <button v-on:click="fightBonusDownHandler" type="button" class="btn btn-lg btn-outline-primary">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <div class="col lead">
+                            <i class="fas fa-medkit"></i>&nbsp;{{ vue('fight.bonus') }}
+                        </div>
+                        <div class="col">
+                            <button v-on:click="fightBonusUpHandler" type="button" class="btn btn-lg btn-outline-primary">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <h1 class="text-center">{{ vue('fightStrongness') }}</h1>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group btn-group-lg btn-block" role="group" aria-label="Action Buttons">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button v-on:click="fightHandler" type="button" class="btn btn-primary" data-dismiss="modal">
+                            <i class="fas fa-dungeon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

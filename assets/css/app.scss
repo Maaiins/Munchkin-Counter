@@ -1,0 +1,58 @@
+/**
+ * app
+ *
+ * This file is part of the Munchkin project.
+ *
+ * @author     Lauser, Nicolai <munchkin-counter@lauser.info>
+ * @copyright  2019 Lauser, Nicolai
+ * @version    $Id$
+ */
+// Bootstrap
+$primary:       #531b02 !default;
+@import "~bootstrap/scss/bootstrap";
+
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+@font-face {
+  font-family: 'Lacquer';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/lacquer-v1-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Lacquer Regular'), local('Lacquer-Regular'),
+  url('../fonts/lacquer-v1-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../fonts/lacquer-v1-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('../fonts/lacquer-v1-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('../fonts/lacquer-v1-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('../fonts/lacquer-v1-latin-regular.svg#Lacquer') format('svg'); /* Legacy iOS */
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Lacquer', sans-serif;
+  min-height: 100%;
+  background-color: #fad994;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}

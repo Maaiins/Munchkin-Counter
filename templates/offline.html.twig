@@ -1,0 +1,25 @@
+{#
+ # offline
+ #
+ # This file is part of the Munchkin project.
+ #
+ # @author     Lauser, Nicolai <munchkin-counter@lauser.info>
+ # @copyright  2019 Lauser, Nicolai
+ # @version    $Id$
+ #}
+{% extends 'base/index.html.twig' %}
+
+{% block content %}
+    <form method="post">
+        <div class="container centered">
+            <div class="container-fluid">
+                <input type="password" name="password" class="form-control" placeholder="" autocomplete="password" required>
+            </div>
+        </div>
+        <div class="container actions">
+            <div class="container-fluid">
+                <input type="submit" class="btn btn-block btn-primary">
+            </div>
+        </div>
+    </form>
+{% endblock %}

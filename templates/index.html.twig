@@ -1,0 +1,33 @@
+{#
+ # index
+ #
+ # This file is part of the Munchkin project.
+ #
+ # @author     Lauser, Nicolai <munchkin-counter@lauser.info>
+ # @copyright  2019 Lauser, Nicolai
+ # @version    $Id$
+ #}
+{% extends 'base/index.html.twig' %}
+
+{% block content %}
+    <div class="container centered">
+        <div class="container-fluid">
+            <div class="text-center mb-3">
+                <h1>Hi {{ vue('username') }}!</h1>
+                <a v-show="username" data-toggle="collapse" href="#usernameInput" aria-expanded="false" aria-controls="usernameInput">Whaaaat wer?!</a>
+            </div>
+            <div class="collapse" id="usernameInput">
+                <div class="form-group">
+                    <input v-model="username" v-on:change="submitHandler" type="text" name="username" class="form-control" placeholder="Username" autocomplete="username" required>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container actions">
+        <div class="container-fluid">
+            <button v-on:click="submitHandler" type="button" class="btn btn-lg btn-block btn-primary">
+                <i class="fas fa-sign-in-alt"></i>
+            </button>
+        </div>
+    </div>
+{% endblock %}

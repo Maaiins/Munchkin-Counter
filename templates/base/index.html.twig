@@ -1,0 +1,41 @@
+{#
+ # base
+ #
+ # This file is part of the Munchkin Counter project.
+ #
+ # @author     Lauser, Nicolai <munchkin-counter@lauser.info>
+ # @copyright  2019 Lauser, Nicolai
+ # @version    $Id$
+ #}
+{% if appSettings is not defined %}
+    {% set appSettings=[] %}
+{% endif %}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de-DE" lang="de-DE" dir="ltr">
+<head>
+    {% block meta %}
+        {% include 'base/meta/index.html.twig' %}
+    {% endblock %}
+
+    {% block manifest %}
+        {% include 'base/manifest/index.html.twig' %}
+    {% endblock %}
+
+    <title>Munchkin Counter</title>
+
+    {% block styles %}
+        {{ load_css_assets() }}
+    {% endblock %}
+</head>
+<body>
+<div id="content" {% for key,setting in appSettings %}data-{{ key }}="{{ setting }}"{% endfor %}>
+    {% block content %}
+    {% endblock %}
+</div>
+
+{% block javascripts %}
+    {{ load_js_assets() }}
+{% endblock %}
+</body>
+</html>
